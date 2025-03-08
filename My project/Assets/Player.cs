@@ -13,8 +13,8 @@ public class Player : MonoBehaviour
     //public AudioSource audioSourceJump;
     //public AudioSource audioSourceWalk;
     //public AudioSource audioSourceAttack;
+    public AudioSource[] _audios = new AudioSource[2];
 
-    
     void Start()
     {
       rig = GetComponent<Rigidbody2D>();  
@@ -36,23 +36,25 @@ public class Player : MonoBehaviour
 
         if(Input.GetAxis("Horizontal") > 0f)
         {
-        Debug.Log("Andando!");
-        //if (!audioSourceWalk.isPlaying) audioSourceWalk.Play();
-        anim.SetBool("walk", true);
-        transform.eulerAngles = new Vector3(0f,0f,0f);
+            _audios[2].Play();
+            Debug.Log("Andando!");
+            //if (!audioSourceWalk.isPlaying) audioSourceWalk.Play();
+            anim.SetBool("walk", true);
+            transform.eulerAngles = new Vector3(0f,0f,0f);
         }
 
          if(Input.GetAxis("Horizontal") < 0f)
         {
-        Debug.Log("Andando!");
-        //if (!audioSourceWalk.isPlaying) audioSourceWalk.Play();
-        anim.SetBool("walk", true);
-        transform.eulerAngles = new Vector3(0f,180f,0f);
+            Debug.Log("Andando!");
+            //if (!audioSourceWalk.isPlaying) audioSourceWalk.Play();
+            anim.SetBool("walk", true);
+            transform.eulerAngles = new Vector3(0f,180f,0f);
         }
 
          if(Input.GetAxis("Horizontal") == 0f)
         {
-        anim.SetBool("walk", false);
+            anim.SetBool("walk", false);
+            _audios[2].Stop();
         }
     }
 
@@ -61,6 +63,7 @@ public class Player : MonoBehaviour
 {
     if (Input.GetButtonDown("Jump"))
     {
+        _audios[1].Play();
         if (!isJumping) 
         {
             Debug.Log("Pulo!");
@@ -78,10 +81,11 @@ public class Player : MonoBehaviour
 {
     if(Input.GetKeyDown(KeyCode.Z))
     {
-    Debug.Log("Ataque!");
-    anim.SetBool("attack", true);
-    Invoke("PlayAttackSound", 0.49f);
-    Invoke("ResetarAtaque", 1.3f);
+        _audios[0].Play();
+        Debug.Log("Ataque!");
+        anim.SetBool("attack", true);
+        Invoke("PlayAttackSound", 0.49f);
+        Invoke("ResetarAtaque", 1.3f);
     
     }
 }
